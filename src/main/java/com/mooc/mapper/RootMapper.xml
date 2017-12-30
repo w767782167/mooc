@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mooc.mapper.RootMapper" >
+  <resultMap id="BaseResultMap" type="com.mooc.domain.Root" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="rootname" property="rootname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from root
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mooc.domain.Root" useGeneratedKeys="true" keyProperty="id" >
+    insert into root (rootname, password, create_time
+      )
+    values (#{rootname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mooc.domain.Root" >
+    update root
+    set rootname = #{rootname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, rootname, password, create_time
+    from root
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, rootname, password, create_time
+    from root
+  </select>
+  
+  
+  <!-- root login -->
+  <select id="queryRootByLogin" resultType="Root">
+     select * from root where rootname=#{rootname} and password=#{password}
+  </select>
+  
+  
+  
+  
+</mapper>

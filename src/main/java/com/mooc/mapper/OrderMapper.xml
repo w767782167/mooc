@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mooc.mapper.OrderMapper">
+	<resultMap id="BaseResultMap" type="com.mooc.domain.Order">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="stu_name" jdbcType="VARCHAR" property="stuName" />
+		<result column="tech_name" jdbcType="VARCHAR" property="techName" />
+		<result column="course" jdbcType="VARCHAR" property="course" />
+		<result column="periods" jdbcType="INTEGER" property="periods" />
+		<result column="status" jdbcType="TINYINT" property="status" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		t_order
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" keyProperty="id" parameterType="com.mooc.domain.Order"
+		useGeneratedKeys="true">
+		insert into t_order (stu_name, tech_name, course,
+		periods, status, create_time
+		)
+		values (#{stuName,jdbcType=VARCHAR},
+		#{techName,jdbcType=VARCHAR},
+		#{course,jdbcType=VARCHAR},
+		#{periods,jdbcType=INTEGER}, #{status,jdbcType=TINYINT},
+		#{createTime,jdbcType=TIME}
+		)
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.mooc.domain.Order">
+		update t_order
+		set
+		stu_name = #{stuName,jdbcType=VARCHAR},
+		tech_name =
+		#{techName,jdbcType=VARCHAR},
+		course = #{course,jdbcType=VARCHAR},
+		periods = #{periods,jdbcType=INTEGER},
+		status =
+		#{status,jdbcType=TINYINT},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select id, stu_name, tech_name, course, periods, status,
+		create_time
+		from t_order
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, stu_name, tech_name,
+		course, periods, status, create_time
+		from t_order
+	</select>
+
+
+	<!-- order page -->
+	<sql id="conditionSql">
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="stu_name!=null">
+				AND stu_name like concat('%',#{stuName},'%')
+			</if>
+			<if test="tech_name!=null">
+				AND tech_name like concat('%',#{techName},'%')
+			</if>
+			<if test="course!=null">
+				AND course = #{course}
+			</if>
+			<!-- <if test="tech_name!=null"> AND age &gt; #{beginAge} </if> <if test="endAge!=null"> 
+				AND age &lt; #{endAge} </if> -->
+		</trim>
+	</sql>
+
+
+	<!-- 查询结果集    #{start}  getStart() in QueryObject -->
+	<select id="selectByPage" parameterType="com.mooc.query.QueryObject"
+		resultType="Order">
+		select id, stu_name, tech_name, course, periods, status,
+		create_time from t_order
+		<include refid="conditionSql"></include>
+		limit #{start},#{row}
+	</select>
+
+	<!-- 分页总条数查询 -->
+	<select id="selectByPageCount" parameterType="com.mooc.query.QueryObject"
+		resultType="long">
+		select count(*) from t_order
+		<include refid="conditionSql"></include>
+	</select>
+	
+	
+
+
+
+</mapper>

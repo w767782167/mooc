@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mooc.mapper.TeacherMapper">
+	<resultMap id="BaseResultMap" type="com.mooc.domain.Teacher">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="fullname" property="fullname" jdbcType="VARCHAR" />
+		<result column="headimg" property="headimg" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="tuition" property="tuition" jdbcType="DOUBLE" />
+		<result column="country" property="country" jdbcType="VARCHAR" />
+		<result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+		<result column="native_lang" property="nativeLang" jdbcType="VARCHAR" />
+		<result column="tel" property="tel" jdbcType="VARCHAR" />
+		<result column="skype" property="skype" jdbcType="VARCHAR" />
+		<result column="introduction" property="introduction" jdbcType="VARCHAR" />
+		<result column="member_type" property="memberType" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="queryEmailName" resultType="com.mooc.domain.Teacher">
+		select id, fullname,
+		headimg,
+		email, password, sex, tuition, country,
+		birthday, native_lang,
+		tel,
+		skype, introduction, member_type, create_time from teacher where
+		email=#{email}
+	</select>
+
+	<select id="queryemail" resultType="com.mooc.domain.Teacher">
+		select id, fullname, headimg,
+		email, password, sex, tuition, country,
+		birthday, native_lang,
+		tel,
+		skype, introduction, member_type, create_time
+		from teacher where email=#{email} and password=#{password}
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		teacher
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.mooc.domain.Teacher"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into teacher (fullname,
+		headimg, email,
+		password, sex, tuition,
+		country, birthday, native_lang,
+		tel, skype, introduction,
+		member_type, create_time)
+		values
+		(#{fullname,jdbcType=VARCHAR}, #{headimg,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{sex,jdbcType=VARCHAR}, #{tuition,jdbcType=DOUBLE},
+		#{country,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP},
+		#{nativeLang,jdbcType=VARCHAR},
+		#{tel,jdbcType=VARCHAR},
+		#{skype,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR},
+		#{memberType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="com.mooc.domain.Teacher">
+		update teacher
+		set
+		fullname = #{fullname,jdbcType=VARCHAR},
+		headimg =
+		#{headimg,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=VARCHAR},
+		tuition = #{tuition,jdbcType=DOUBLE},
+		country =
+		#{country,jdbcType=VARCHAR},
+		birthday = #{birthday,jdbcType=TIMESTAMP},
+		native_lang = #{nativeLang,jdbcType=VARCHAR},
+		tel =
+		#{tel,jdbcType=VARCHAR},
+		skype = #{skype,jdbcType=VARCHAR},
+		introduction = #{introduction,jdbcType=VARCHAR},
+		member_type =
+		#{memberType,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select id, fullname, headimg, email, password, sex,
+		tuition, country,
+		birthday, native_lang,
+		tel, skype, introduction,
+		member_type, create_time
+		from teacher
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, fullname, headimg,
+		email, password, sex, tuition, country,
+		birthday, native_lang,
+		tel,
+		skype, introduction, member_type, create_time
+		from teacher
+	</select>
+	
+	<select id="selectnativeLang" resultMap="BaseResultMap">
+		select id, fullname,
+		headimg,
+		email, password, sex, tuition, country,
+		birthday, native_lang,
+		tel,
+		skype, introduction, member_type, create_time
+		from teacher where
+		native_lang = #{nativeLang,jdbcType=VARCHAR}
+	</select>
+</mapper>

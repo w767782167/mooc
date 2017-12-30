@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mooc.mapper.CommentMapper" >
+  <resultMap id="BaseResultMap" type="com.mooc.domain.Comment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="stu_name" property="stuName" jdbcType="VARCHAR" />
+    <result column="tech_name" property="techName" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.mooc.domain.Comment" useGeneratedKeys="true" keyProperty="id" >
+    insert into comment (stu_name, tech_name, content, 
+      comment_time)
+    values (#{stuName,jdbcType=VARCHAR}, #{techName,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{commentTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.mooc.domain.Comment" >
+    update comment
+    set stu_name = #{stuName,jdbcType=VARCHAR},
+      tech_name = #{techName,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      comment_time = #{commentTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, stu_name, tech_name, content, comment_time
+    from comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, stu_name, tech_name, content, comment_time
+    from comment
+  </select>
+</mapper>

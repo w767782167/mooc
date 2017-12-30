@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mooc.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.mooc.domain.Student" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fullname" property="fullname" jdbcType="VARCHAR" />
+    <result column="headimg" property="headimg" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="country" property="country" jdbcType="VARCHAR" />
+    <result column="native_lang" property="nativeLang" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="skype" property="skype" jdbcType="VARCHAR" />
+    <result column="introductionion" property="introduction" jdbcType="VARCHAR" />
+    <result column="member_type" property="memberType" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from student
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="Student" useGeneratedKeys="true" keyProperty="id" >
+    insert into student (fullname, headimg, email, 
+      password, sex, birthday, 
+      country, native_lang, tel, 
+      skype, introduction, member_type, 
+      create_time)
+    values (#{fullname,jdbcType=VARCHAR}, #{headimg,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{country,jdbcType=VARCHAR}, #{nativeLang,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{skype,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, #{memberType,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Student" >
+    update student
+    set fullname = #{fullname,jdbcType=VARCHAR},
+      headimg = #{headimg,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      country = #{country,jdbcType=VARCHAR},
+      native_lang = #{nativeLang,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      skype = #{skype,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      member_type = #{memberType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, fullname, headimg, email, password, sex, birthday, country, native_lang, 
+    tel, skype, introduction, member_type, create_time
+    from student
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select *
+    from student
+  </select>
+   <select id="queryByLogin" resultType="Student" >
+    select * from student where email=#{email} and password=#{password}
+  </select>
+
+  <select id="queryByName" resultType="Student" >
+    select * from student where email=#{email}
+  </select>
+  
+  
+
+  <!-- 分页 -->
+  <sql id="conditionSql">
+  
+  </sql>
+  
+  <select id="queryByPageCount" resultType="long">
+     select count(*) from student <include refid="conditionSql"/>
+  </select>
+  
+  <select id="queryByPageList" resultType="Student">
+     select * from student <include refid="conditionSql"/>
+     limit #{start},#{row}
+  </select>
+  
+  <!--按国籍查询  -->
+  <select id="selectByCountry" resultType="Student">
+  select * from student where country=#{country}
+  </select>
+
+
+</mapper>

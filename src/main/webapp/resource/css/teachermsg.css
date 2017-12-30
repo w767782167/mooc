@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+
+* { /* 去除所有的下划线 */
+	text-decoration: none;
+	margin: opx;
+	padding: 0px;
+}
+/*  页头样式*/
+#head {
+	
+}
+/* 页尾样式 */
+#foot {color: #555;
+	text-align: center;
+	margin-bottom: 50px;
+	margin-top: 500px;
+}
+
+#foot a {
+	color: #555;
+	margin: 0px 5px;
+}
+
+#foot_service {
+	color: black;
+	font-size: 20px;
+}
+#foot_service a {
+	color: black;
+}
+/*主题样式开始  */
+#main {
+	
+}
+#teacher_head{
+	margin-left: 50px;
+	float: left; 
+	
+}
+#tercher_msg{
+	height:180px;
+	width:550px;
+	background-color:#efe;
+	float: left;
+}
+#teacher_name{
+	
+	font-size: 24px;
+}
+#price{
+	background-color:#efe;
+	margin-right:150px;
+	float: right;
+}
